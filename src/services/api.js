@@ -12,12 +12,33 @@ export const coinRankApi = createApi({
         home: builder.query({
             query: () => ({
                 url:`/stats`,
-                method:"GET",
+                method:'GET',
                 headers: coinRankApiHeaders
             })
-        })
+        }),
+        coins: builder.query({
+            query: () => ({
+                url:`/coins`,
+                method:'GET',
+                headers: coinRankApiHeaders
+            })
+        }),
+        coin: builder.query({
+            query: (id) => ({
+                url:`/coin/${id}`,
+                method:'GET',
+                headers:coinRankApiHeaders
+            })
+        }),
+        history: builder.query({
+            query: (id) => ({
+                url:`/coin/${id}/history`,
+                method:'GET',
+                headers:coinRankApiHeaders
+            })
+        }),
     })
 })
 
 
-export const {useHomeQuery} = coinRankApi;
+export const {useHomeQuery, useCoinsQuery, useCoinQuery,useHistoryQuery} = coinRankApi;
