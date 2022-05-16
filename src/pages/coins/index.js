@@ -57,12 +57,12 @@ const Coins = () => {
                   {" "}
                   Price:{" "}
                   {millify(Math.round(coin.price * 100) / 100, {
-                    precision: 3,
+                    precision: 2,
                   })}{" "}
                   USD
                 </Text>
                 <Text>
-                  Market Cap: {millify(coin.marketCap, { precision: 3 })} USD
+                  Market Cap: {millify(coin.marketCap, { precision: 2 })} USD
                 </Text>
                 <HStack>
                   <Text>Daily Change: {coin.change}% </Text>
