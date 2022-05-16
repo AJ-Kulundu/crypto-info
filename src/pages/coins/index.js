@@ -9,11 +9,16 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useCoinsQuery } from "../../services/api";
-import moment from "moment";
+import { motion } from "framer-motion";
+import millify from "millify";
+import { useRouter } from "next/router";
+
+const MBox = motion(Box);
+
 const Coins = () => {
   const { data, isLoading, error, isSuccess } = useCoinsQuery();
+  const router = useRouter();
   const CoinData = data;
-  console.log(CoinData);
 
   return (
     <Flex justify={"center"} mb={4} p={4}>
@@ -26,30 +31,43 @@ const Coins = () => {
           </Box>
           <SimpleGrid
             columns={{ base: 1, md: 2, lg: 3 }}
-            spacing={4}
+            spacingX={10}
             spacingY={10}
           >
-            {CoinData.data.coins.map((coin, id) => (
-              <Box
+            {CoinData?.data?.coins.map((coin, id) => (
+              <MBox
+                as="a"
                 border={"1px solid"}
                 key={id}
                 p={5}
                 borderRadius={"lg"}
                 boxShadow={"md"}
+                onClick={() => router.push(`coins/${coin.uuid}`)}
+                whileHover={{ scale: 1.2, transition: 0.2 }}
+                whileTap={{ scale: 0.8, transition: 0.2 }}
               >
-                <HStack>
+                <HStack justify={"space-between"}>
+                  <Text>
+                    {id + 1}. {coin.symbol}
+                  </Text>
                   <Avatar size="sm" name={coin.name} src={coin.iconUrl} />
-                  <Text>{coin.symbol}</Text>
                 </HStack>
                 <Text>{coin.name}</Text>
-
-                <Text> Price: {Math.round(coin.price * 100) / 100} USD</Text>
-                <Text>Market Cap: {coin.marketCap} USD</Text>
                 <Text>
-                  Listed on:{" "}
-                  {moment(coin.listedAt).format("MMMM Do YYYY, h:mm:ss a")}
+                  {" "}
+                  Price:{" "}
+                  {millify(Math.round(coin.price * 100) / 100, {
+                    precision: 3,
+                  })}{" "}
+                  USD
                 </Text>
-              </Box>
+                <Text>
+                  Market Cap: {millify(coin.marketCap, { precision: 3 })} USD
+                </Text>
+                <HStack>
+                  <Text>Daily Change: {coin.change}% </Text>
+                </HStack>
+              </MBox>
             ))}
           </SimpleGrid>
         </Box>
