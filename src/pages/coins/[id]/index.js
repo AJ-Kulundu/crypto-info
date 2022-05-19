@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -9,9 +9,13 @@ import {
   Avatar,
   SimpleGrid,
   Link,
-  HStack,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
 } from "@chakra-ui/react";
-import { useCoinQuery } from "../../../services/api";
+import { useCoinQuery, useHistoryQuery } from "../../../services/api";
 import HTMLReactParser from "html-react-parser";
 import { motion } from "framer-motion";
 import millify from "millify";
@@ -22,13 +26,21 @@ import {
   FaHashtag,
   FaMoneyBillWave,
   FaExclamation,
+  FaAngleDown,
 } from "react-icons/fa";
+import LineChart from "../../../Components/LineChart";
+
 const MLink = motion(Link);
 
 const Coin = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [timePeriod, setTimePeriod] = useState("7d");
   const { data: CoinData, isLoading, error, isSuccess } = useCoinQuery(id);
+  const { data: HistoryData } = useHistoryQuery(id, timePeriod);
+
+  console.log(timePeriod);
+  const Time = ["3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y"];
   const Stats = [
     {
       title: "Ranking",
@@ -94,7 +106,7 @@ const Coin = () => {
     },
   ];
   return (
-    <Flex justify={"center"} p={4}>
+    <Flex justify={"flex-start"} p={4}>
       {isLoading && <Heading>Loading</Heading>}
       {error && <Heading>Error</Heading>}
       {isSuccess && (
@@ -105,6 +117,25 @@ const Coin = () => {
               size="lg"
               name={CoinData?.data?.coin?.name}
               src={CoinData?.data?.coin?.iconUrl}
+            />
+          </Flex>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<FaAngleDown />}>
+              {timePeriod}
+            </MenuButton>
+            <MenuList>
+              {Time.map((time, id) => (
+                <MenuItem key={id} onClick={() => setTimePeriod(time)}>
+                  {time}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
+          <Flex p={6} width="100%" justify={"flex-start"} direction="column">
+            <LineChart
+              coinHistory={HistoryData}
+              currentPrice={millify(CoinData?.data?.coin?.price)}
+              coinName={CoinData?.data?.coin?.name}
             />
           </Flex>
           <Flex width={"100%"} justify={"flex-start"} p={6}>
