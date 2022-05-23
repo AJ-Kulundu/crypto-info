@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import moment from "moment";
 
 ChartJS.register(
   CategoryScale,
@@ -27,10 +28,14 @@ function LineChart({ coinHistory, currentPrice, coinName }) {
   const coinPrice = [];
   const coinTimestamp = [];
 
-  for (let i = 0; i < coinHistory?.data?.history?.length; i++) {
-    coinPrice.push(coinHistory.data.history[i].price);
+  for (let i = coinHistory?.data?.history?.length - 1; i >= 0; i -= 1) {
+    coinPrice.push(coinHistory?.data?.history[i].price);
+  }
+
+  for (let i = coinHistory?.data?.history?.length - 1; i >= 0; i -= 1) {
     coinTimestamp.push(
-      new Date(coinHistory.data.history[i].timestamp).toLocaleDateString()
+      moment.unix(coinHistory?.data?.history[i].timestamp).format("L")
+      //new Date(coinHistory?.data?.history[i].timestamp).toLocaleDateString()
     );
   }
 
