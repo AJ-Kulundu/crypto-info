@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -37,9 +37,9 @@ const Coin = () => {
   const { id } = router.query;
   const [timePeriod, setTimePeriod] = useState("7d");
   const { data: CoinData, isLoading, error, isSuccess } = useCoinQuery(id);
-  const { data: HistoryData } = useHistoryQuery(id, timePeriod);
+  const { data: HistoryData } = useHistoryQuery({ id, timePeriod });
 
-  console.log(timePeriod);
+  console.log(timePeriod, HistoryData);
   const Time = ["3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y"];
   const Stats = [
     {
@@ -105,6 +105,7 @@ const Coin = () => {
       icon: <FaMoneyBillWave />,
     },
   ];
+
   return (
     <Flex justify={"flex-start"} p={4}>
       {isLoading && <Heading>Loading</Heading>}
