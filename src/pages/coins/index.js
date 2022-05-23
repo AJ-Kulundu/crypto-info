@@ -28,6 +28,7 @@ const Coins = () => {
   const router = useRouter();
   const [cryptos, setCryptos] = useState(CoinData?.data?.coins);
   const [search, setSearch] = useState("");
+  console.log(cryptos);
 
   useEffect(() => {
     const filteredData = CoinData?.data?.coins.filter((coin) =>
@@ -60,11 +61,12 @@ const Coins = () => {
             spacingX={10}
             spacingY={10}
           >
-            {cryptos.length === 0 ? (
+            {cryptos && cryptos.length === 0 ? (
               <Center>
                 <Heading>Crypto Currency not Found</Heading>
               </Center>
             ) : (
+              cryptos &&
               cryptos.map((coin, id) => (
                 <MBox
                   as="a"
@@ -74,7 +76,7 @@ const Coins = () => {
                   borderRadius={"lg"}
                   boxShadow={"md"}
                   onClick={() => router.push(`coins/${coin.uuid}`)}
-                  whileHover={{ scale: 1.2, transition: 0.2 }}
+                  whileHover={{ scale: 1.1, transition: 0.2 }}
                   whileTap={{ scale: 0.8, transition: 0.2 }}
                 >
                   <HStack justify={"space-between"}>
