@@ -39,7 +39,6 @@ const Coin = () => {
   const { data: CoinData, isLoading, error, isSuccess } = useCoinQuery(id);
   const { data: HistoryData } = useHistoryQuery({ id, timePeriod });
 
-  console.log(timePeriod, HistoryData);
   const Time = ["3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y"];
   const Stats = [
     {
@@ -113,7 +112,10 @@ const Coin = () => {
       {isSuccess && (
         <VStack>
           <Flex p={6} justify={"space-between"} align="center" width="100%">
-            <Heading>{CoinData?.data?.coin?.name}</Heading>
+            <Heading>
+              {CoinData?.data?.coin?.name} &#40;{CoinData?.data?.coin?.symbol}{" "}
+              &#41;
+            </Heading>
             <Avatar
               size="lg"
               name={CoinData?.data?.coin?.name}
@@ -132,7 +134,14 @@ const Coin = () => {
               ))}
             </MenuList>
           </Menu>
-          <Flex p={6} width="100%" justify={"flex-start"} direction="column">
+          <Flex
+            p={6}
+            width="100%"
+            justify={"flex-start"}
+            direction="column"
+            minHeight={"20vh"}
+            overflow="auto"
+          >
             <LineChart
               coinHistory={HistoryData}
               currentPrice={millify(CoinData?.data?.coin?.price)}
