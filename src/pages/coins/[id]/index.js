@@ -33,12 +33,22 @@ import Loading from "../../../Components/Loading";
 
 const MLink = motion(Link);
 
-const Coin = () => {
+const Coin = ({ host, apiKey }) => {
+  const headers = {
+    "X-RapidAPI-Host": host,
+    "X-RapidAPI-Key": apiKey,
+  };
   const router = useRouter();
-  const { id } = router.query;
+  const { id: uuid } = router.query;
   const [timePeriod, setTimePeriod] = useState("7d");
-  const { data: CoinData, isLoading, error, isSuccess } = useCoinQuery(id);
-  const { data: HistoryData } = useHistoryQuery({ id, timePeriod });
+  const {
+    data: CoinData,
+    isLoading,
+    error,
+    isSuccess,
+  } = useCoinQuery({ uuid, headers });
+  const { data: HistoryData } = useHistoryQuery({ uuid, timePeriod, headers });
+  console.log(error);
 
   const Time = ["3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y"];
   const Stats = [
@@ -220,6 +230,15 @@ const Coin = () => {
       )}
     </Flex>
   );
+};
+
+export const getServerSideProps = async () => {
+  return {
+    props: {
+      host: process.env.RAPIDAPI_HOST,
+      apiKey: process.env.RAPIDAPI_KEY,
+    },
+  };
 };
 
 export default Coin;
