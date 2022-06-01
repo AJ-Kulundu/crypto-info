@@ -23,19 +23,20 @@ ChartJS.register(
   Legend
 );
 
-function LineChart({ coinHistory, currentPrice, coinName }) {
-  const value = useColorModeValue("#1A202C", "#F7FAFC");
+function LineChart({ coinHistory, currentPrice, coinName, timePeriod,color }) {
+  
   const coinPrice = [];
   const coinTimestamp = [];
 
   for (let i = coinHistory?.data?.history?.length - 1; i >= 0; i -= 1) {
     coinPrice.push(coinHistory?.data?.history[i].price);
   }
-
+  console.log(timePeriod);
   for (let i = coinHistory?.data?.history?.length - 1; i >= 0; i -= 1) {
     coinTimestamp.push(
-      moment.unix(coinHistory?.data?.history[i].timestamp).format("L")
-      //new Date(coinHistory?.data?.history[i].timestamp).toLocaleDateString()
+      moment
+        .unix(coinHistory?.data?.history[i].timestamp)
+        .format(`DD-MM-YY, HH:mm`)
     );
   }
 
@@ -46,8 +47,8 @@ function LineChart({ coinHistory, currentPrice, coinName }) {
         label: "Price In USD",
         data: coinPrice,
         fill: false,
-        backgroundColor: "#0071bd",
-        borderColor: "#0071bd",
+        backgroundColor: color,
+        borderColor: color,
       },
     ],
   };
