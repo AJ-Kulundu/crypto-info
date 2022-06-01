@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import {
-  Box,
   Flex,
   Heading,
   Text,
@@ -156,18 +155,16 @@ const Coin = ({ host, apiKey }) => {
               coinHistory={HistoryData}
               currentPrice={millify(CoinData?.data?.coin?.price)}
               coinName={CoinData?.data?.coin?.name}
-              timePeriod={timePeriod}
               color={CoinData?.data?.coin?.color}
             />
           </Flex>
           <Flex width={"100%"} justify={"flex-start"} p={6}>
-            <VStack justify={"flex-start"}>
+            <Flex justify={"space-between"} direction="column">
               <Heading>{CoinData?.data?.coin?.name} Statistics</Heading>
               <SimpleGrid
-                columns={{ base: 1, md: 3, lg: 4 }}
-                spacingX={{ base: 5, md: 10 }}
-                spacingY={{ base: 5, md: 10 }}
-                justify={"space-between"}
+                columns={{ base: 1, md: 2, lg: 4 }}
+                spacingX={{ base: 5, md: 15 }}
+                spacingY={{ base: 5, md: 15 }}
               >
                 {Stats.map((stat, id) => (
                   <Flex
@@ -188,7 +185,7 @@ const Coin = ({ host, apiKey }) => {
                   </Flex>
                 ))}
               </SimpleGrid>
-            </VStack>
+            </Flex>
           </Flex>
           <SimpleGrid columns={{ base: 1, md: 2 }} width="full">
             <Flex direction="column" p={6} justify={"flex-start"}>
