@@ -12,6 +12,7 @@ import {
 import { useHomeQuery } from "../services/api";
 import millify from "millify";
 import { useRouter } from "next/router";
+import Loading from "../Components/Loading";
 
 export default function Home() {
   const { data, isLoading, isSuccess, error } = useHomeQuery();
@@ -20,7 +21,7 @@ export default function Home() {
   console.log(StatData);
   return (
     <Flex p={4} justify="center" align="center">
-      {isLoading && <Heading>Loading</Heading>}
+      {isLoading && <Loading />}
       {error && <Heading>Error</Heading>}
       {isSuccess && (
         <Box>

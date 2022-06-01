@@ -29,6 +29,7 @@ import {
   FaAngleDown,
 } from "react-icons/fa";
 import LineChart from "../../../Components/LineChart";
+import Loading from "../../../Components/Loading";
 
 const MLink = motion(Link);
 
@@ -107,7 +108,7 @@ const Coin = () => {
 
   return (
     <Flex justify={"flex-start"} p={4}>
-      {isLoading && <Heading>Loading</Heading>}
+      {isLoading && <Loading />}
       {error && <Heading>Error</Heading>}
       {isSuccess && (
         <VStack>
@@ -146,6 +147,8 @@ const Coin = () => {
               coinHistory={HistoryData}
               currentPrice={millify(CoinData?.data?.coin?.price)}
               coinName={CoinData?.data?.coin?.name}
+              timePeriod={timePeriod}
+              color={CoinData?.data?.coin?.color}
             />
           </Flex>
           <Flex width={"100%"} justify={"flex-start"} p={6}>

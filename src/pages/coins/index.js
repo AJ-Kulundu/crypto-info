@@ -18,7 +18,7 @@ import { motion } from "framer-motion";
 import millify from "millify";
 import { useRouter } from "next/router";
 import { FaSearch } from "react-icons/fa";
-import Head from "next/head";
+import Loading from "../../Components/Loading";
 
 const MBox = motion(Box);
 
@@ -28,7 +28,6 @@ const Coins = () => {
   const router = useRouter();
   const [cryptos, setCryptos] = useState(CoinData?.data?.coins);
   const [search, setSearch] = useState("");
-  console.log(cryptos);
 
   useEffect(() => {
     const filteredData = CoinData?.data?.coins.filter((coin) =>
@@ -52,7 +51,7 @@ const Coins = () => {
           </InputGroup>
         </Flex>
       </Center>
-      {isLoading && <Heading>Loading</Heading>}
+      {isLoading && <Loading />}
       {error && <Heading>Error</Heading>}
       {isSuccess && (
         <Box minHeight="65vh" width="100%">
@@ -83,6 +82,7 @@ const Coins = () => {
                     <Text>
                       {id + 1}. {coin.symbol}
                     </Text>
+
                     <Avatar size="sm" name={coin.name} src={coin.iconUrl} />
                   </HStack>
                   <Text>{coin.name}</Text>
