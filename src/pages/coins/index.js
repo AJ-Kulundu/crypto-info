@@ -22,9 +22,17 @@ import Loading from "../../Components/Loading";
 
 const MBox = motion(Box);
 
-const Coins = () => {
-  const Value = useColorModeValue("gray.800", "white");
-  const { data: CoinData, isLoading, error, isSuccess } = useCoinsQuery();
+const Coins = ({ host, apiKey }) => {
+  const headers = {
+    "X-RapidAPI-Host": host,
+    "X-RapidAPI-Key": apiKey,
+  };
+  const {
+    data: CoinData,
+    isLoading,
+    error,
+    isSuccess,
+  } = useCoinsQuery({ headers });
   const router = useRouter();
   const [cryptos, setCryptos] = useState(CoinData?.data?.coins);
   const [search, setSearch] = useState("");
@@ -108,6 +116,15 @@ const Coins = () => {
       )}
     </Flex>
   );
+};
+
+export const getServerSideProps = async () => {
+  return {
+    props: {
+      host: process.env.RAPIDAPI_HOST,
+      apiKey: process.env.RAPIDAPI_KEY,
+    },
+  };
 };
 
 export default Coins;
