@@ -1,4 +1,5 @@
 import "../theme/style.css";
+import "../styles/Loader.scss";
 import theme from "../theme/index";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "../Components/Navbar";

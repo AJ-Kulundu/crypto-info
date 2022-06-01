@@ -17,6 +17,7 @@
     "chart.js": "^3.7.1",
     "framer-motion": "^6.3.3",
     "html-react-parser": "^1.4.12",
+    "loaders.css": "^0.1.2",
     "millify": "^4.0.0",
     "moment": "^2.29.3",
     "next": "12.1.6",
@@ -24,7 +25,9 @@
     "react-chartjs-2": "^4.1.0",
     "react-dom": "18.1.0",
     "react-icons": "^4.3.1",
-    "react-redux": "^8.0.1"
+    "react-loaders": "^3.0.1",
+    "react-redux": "^8.0.1",
+    "sass": "^1.52.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
