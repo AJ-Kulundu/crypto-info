@@ -66,7 +66,7 @@ function LineChart({ coinHistory, currentPrice, coinName, color }) {
     <Box>
       <HStack justify={"space-between"}>
         <Text>{coinName}</Text>
-        <Text>Current Price: {currentPrice}USD</Text>
+        <Text>Current Price: {currentPrice} USD</Text>
       </HStack>
       <Line data={data} options={options} />
     </Box>
