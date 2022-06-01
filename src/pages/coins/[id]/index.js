@@ -48,7 +48,6 @@ const Coin = ({ host, apiKey }) => {
     isSuccess,
   } = useCoinQuery({ uuid, headers });
   const { data: HistoryData } = useHistoryQuery({ uuid, timePeriod, headers });
-  console.log(error);
 
   const Time = ["3h", "24h", "7d", "30d", "3m", "1y", "3y", "5y"];
   const Stats = [

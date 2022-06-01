@@ -27,8 +27,8 @@ export const coinRankApi = createApi({
       }),
     }),
     history: builder.query({
-      query: ({ id, timePeriod, headers }) => ({
-        url: `/coin/${id}/history`,
+      query: ({ uuid, timePeriod, headers }) => ({
+        url: `/coin/${uuid}/history`,
         method: "GET",
         headers: headers,
         params: { timePeriod: timePeriod },
